@@ -1,8 +1,11 @@
 package br.com.digitalzyon.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +27,17 @@ public class ContatoService {
 		return contatoRepository.findAll();
 	}
 	
+	public Page<Contato> listarPaginado(Pageable pageable) {
+		return contatoRepository.findAll(pageable);
+	}
+	
 	public Contato buscarPorId(Integer id) {
 		return contatoRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Contato não encontrato"));
+	}
+	
+	public Optional<Contato> buscarContatoPorId(Integer id) {
+		return contatoRepository.findById(id);
 	}
 
 	@Transactional
